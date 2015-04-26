@@ -1,0 +1,8 @@
+(package-refresh-contents)
+(package-install 'zenburn-theme)
+(package-install 'monokai-theme)
+(package-install 'haskell-mode)
+(package-install 'ghc)
+(package-install 'company-ghc)
+(package-install 'smex)
+(package-install 'powerline)
