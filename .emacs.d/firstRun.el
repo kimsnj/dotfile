@@ -5,4 +5,6 @@
 (package-install 'ghc)
 (package-install 'company-ghc)
 (package-install 'smex)
-(package-install 'powerline)
+(package-install 'yasnippet)
+(package-install 'smart-mode-line)
+(package-install 'smart-mode-line-powerline-theme)

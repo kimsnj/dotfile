@@ -6,6 +6,22 @@
 
 (package-initialize)
 
+;; Customize
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
 ;; Look'n Feel
 (load-theme 'monokai t)
 (set-face-attribute 'default nil :font "Ubuntu Mono")
@@ -19,6 +35,7 @@
 
 ;; Smartline
 (smart-mode-line-enable)
+(powerline-default-theme)
 
 ;; IDO mode
 (ido-mode 1)
@@ -49,7 +66,10 @@
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 
 ;; GHC Mod
-(add-to-list 'exec-path "~/.cabal/bin")
+(if (string-equal system-type "windows-nt")
+    (add-to-list 'exec-path "%appdata%\\cabal\\bin")
+    (add-to-list 'exec-path "~/.cabal/bin"))
+
 (autoload 'ghc-init "ghc" nil t)
 (autoload 'ghc-debug "ghc" nil t)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
@@ -58,17 +78,3 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
