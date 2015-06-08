@@ -1,6 +1,7 @@
 (package-refresh-contents)
 (package-install 'zenburn-theme)
 (package-install 'monokai-theme)
+(package-install 'material-theme)
 (package-install 'haskell-mode)
 (package-install 'ghc)
 (package-install 'company-ghc)
@@ -8,3 +9,5 @@
 (package-install 'yasnippet)
 (package-install 'smart-mode-line)
 (package-install 'smart-mode-line-powerline-theme)
+(package-install 'rainbow-delimiters)
+
