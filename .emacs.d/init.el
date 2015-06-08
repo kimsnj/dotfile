@@ -68,9 +68,8 @@
 
 ;; Running automatically in server-mode when not already started
 (if (and window-system
-	 (not (boundp 'server-process))
-	 (not (memq (process-status server-process) '(connect listen open run))))
-    server-start)
+	 (not (boundp 'server-process)))
+    (server-start))
 
 ;; Haskell
 ;; =======
