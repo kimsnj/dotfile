@@ -32,8 +32,8 @@
 
      ;; Languages
      emacs-lisp
-     python
-     c-c++
+     ;; c-c++
+     clojure
      (haskell :variables
               haskell-enable-ghc-mod-support t
               haskell-enable-hindent-style "johan-tibell")
@@ -82,8 +82,8 @@ before layers configuration."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(atom-one-dark
-                         solarized-dark
                          spacemacs-dark
+                         solarized-dark
                          solarized-light
                          spacemacs-light
                          leuven
@@ -97,11 +97,11 @@ before layers configuration."
                                :size 16
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
-   dotspacemacs-emacs-leader-key "M-m"
+   dotspacemacs-emacs-leader-key "M-r"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it.
    dotspacemacs-major-mode-leader-key ","

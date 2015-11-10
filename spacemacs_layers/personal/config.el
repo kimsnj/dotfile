@@ -1,5 +1,7 @@
+
 ;; Look and feel
 (menu-bar-mode t)
+(delete-selection-mode 1)
 
 ;; Running automatically in server-mode when not already started
 (if (and window-system (not (boundp 'server-process)))
@@ -21,3 +23,8 @@
         ("j" "Journal" entry (file+datetree+prompt "~/org/journal.org")
          "* %?\nEntered on %U\n\n%i\nLink:%a\n")))
 
+;; Paredit for clojure
+(defun turn-on-paredit ()
+  (paredit-mode 1))
+
+(add-hook 'clojure-mode-hook 'turn-on-paredit)
