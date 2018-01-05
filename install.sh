@@ -17,10 +17,24 @@ if [[ ! -e ~/.spacemacs ]]; then
     ln -s ${BASEDIR}/.spacemacs ~/.spacemacs
 fi
 
-# vim
+# (neo)vim
 if [[ ! -e ~/.vimrc  ]]; then
-    echo "Setting up VIM for bépo layout"
-    ln -s ${BASEDIR}/vim ~/.config/vim
-    ln -s ${BASEDIR}/.vimrc ~/.vimrc
+    echo "Setting up VIM for bépo layout and vim-plug"
+    ln -s ${BASEDIR}/nvim ~/.config/nvim
+    ln -s ${BASEDIR}/nvim/init.vim ~/.vimrc
+
+    # vim-plug for vim
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+    # and for neovim
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
+# alacritty terminal
+if [[ ! -e .config/alacritty ]]; then
+   echo "Setting up Alacritty"
+   mkdir -p ~/.config/alacritty
+   ln -s ${BASEDIR}/alacritty.yml ~/.config/alacritty/alacritty.yml
+fi

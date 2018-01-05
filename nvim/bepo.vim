@@ -1,4 +1,3 @@
-set bg=dark
 " {W} -> [É]
 " ——————————
 " On remappe W sur É :
@@ -103,3 +102,15 @@ noremap / 9
 noremap 9 /
 noremap * 0
 noremap 0 *
+
+" NERDTree
+" ––––––––
+let g:NERDTreeMapChdir = 'H'
+let g:NERDTreeMapChdir = 'hd'
+let g:NERDTreeMapCWD = 'HD'
+let g:NERDTreeMapOpenInTab = 'j'
+let g:NERDTreeMapJumpLastChild = 'J'
+let g:NERDTreeMapOpenVSplit = 'k'
+let g:NERDTreeMapRefresh = 'l'
+let g:NERDTreeMapRefreshRoot = 'L'
+
