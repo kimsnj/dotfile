@@ -19,7 +19,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'autozimu/LanguageClient-neovim', {'tag': 'binary-*binary-*--x86_64-unknown-linux-musl'}
+Plug 'autozimu/LanguageClient-neovim', {'tag': 'binary-*binary-*--x86_64-unknown-linux-musl', 'do': 'install.sh'}
 Plug 'rust-lang/rust.vim'
 
 call plug#end()
@@ -43,6 +43,8 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 " Completion setup
 " ————————————————
 let g:deoplete#enable_at_startup = 1
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Warning display
 " ——————————————
@@ -60,8 +62,8 @@ let g:syntastic_check_on_wq = 0
 set hidden
 
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls']
-}
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \}
 
 nnoremap <silent> T :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -76,4 +78,6 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
 
+let mapleader=" "
+imap ,, <esc>
 source ~/.config/nvim/bepo.vim

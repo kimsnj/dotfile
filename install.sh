@@ -6,7 +6,7 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [[ ! -e ~/.zshrc ]]; then
     echo "Setting up ZSH with SlimZsh"
     mkdir ~/.config/zsh
-    $(cd ~/.config/zsh/ && git clone --recursive https://github.com/changs/slimzsh.git ~/.slimzsh)
+    $(cd ~/.config/zsh/ && git clone --recursive https://github.com/changs/slimzsh.git slimzsh)
     ln -s ${BASEDIR}/.zshrc ~/.zshrc
 fi
 
