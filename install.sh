@@ -22,6 +22,7 @@ if [[ ! -e ~/.vimrc  ]]; then
     echo "Setting up VIM for bépo layout and vim-plug"
     ln -s ${BASEDIR}/nvim ~/.config/nvim
     ln -s ${BASEDIR}/nvim/init.vim ~/.vimrc
+    mkdir -p ~/.cache/nvim/undodir
 
     # vim-plug for vim
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
