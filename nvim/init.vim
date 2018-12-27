@@ -11,6 +11,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 
 Plug 'scrooloose/syntastic'
+
+Plug 'jiangmiao/auto-pairs'
+Plug 'ntpeters/vim-better-whitespace'
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -19,7 +23,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'autozimu/LanguageClient-neovim', {'tag': 'binary-*binary-*--x86_64-unknown-linux-musl', 'do': 'install.sh'}
+Plug 'autozimu/LanguageClient-neovim', {'tag': 'next', 'do': 'install.sh'}
 Plug 'rust-lang/rust.vim'
 
 call plug#end()
@@ -40,6 +44,7 @@ set clipboard+=unnamedplus
 
 " ctrlp - use ripgrep if present, ignore files in .gitignore otherwise
 " ——————————————————————————————————
+let g:ctrlp_map = '<c-space>'
 if executable('rg')
   set grepprg=rg\ --color=never
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
@@ -97,6 +102,9 @@ filetype indent on
 
 set encoding=utf8
 set ffs=unix,dos,mac
+
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
 
 " search behaviour
 set ignorecase " case insensitive ...

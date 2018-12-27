@@ -114,3 +114,12 @@ let g:NERDTreeMapOpenVSplit = 'k'
 let g:NERDTreeMapRefresh = 'l'
 let g:NERDTreeMapRefreshRoot = 'L'
 
+" Vim Surround
+" ————————————
+if exists("g:loaded_surround") && (!exists("g:surround_no_mappings") || ! g:surround_no_mappings) && maparg('cs', 'n') !=# ''
+  execute 'nmap ls' maparg('cs', 'n')
+  execute 'nmap lS' maparg('cS', 'n')
+  nunmap cs
+  nunmap cS
+endif
+
