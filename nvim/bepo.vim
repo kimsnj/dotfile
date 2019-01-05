@@ -1,4 +1,4 @@
-" {W} -> [É]
+    " {W} -> [É]
 " ——————————
 " On remappe W sur É :
 noremap é w
@@ -24,6 +24,12 @@ noremap s k
 " {CR} = « haut / bas de l'écran »
 noremap C H
 noremap R L
+
+" Déplacer le curseur haut / milieu / bas de l'ecran
+noremap zC zt
+noremap zM zz
+noremap zR zb
+
 " {TS} = « joindre / aide »
 noremap T J
 noremap S K
@@ -72,8 +78,7 @@ noremap ws <C-w>k
 noremap wc <C-w>h
 noremap wr <C-w>l
 noremap wd <C-w>c
-noremap wo <C-w>s
-noremap wp <C-w>o
+noremap wo <C-w>o
 noremap w<SPACE> :split<CR>
 noremap w<CR> :vsplit<CR>
 

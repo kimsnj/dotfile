@@ -14,7 +14,6 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'scrooloose/nerdtree'
-
 Plug 'scrooloose/syntastic'
 
 Plug 'jiangmiao/auto-pairs'
@@ -28,7 +27,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'sh install.sh'}
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'rust-lang/rust.vim'
 
 call plug#end()
@@ -38,11 +37,16 @@ call plug#end()
 set bg=dark
 colorscheme nord
 let g:nord_italic = 1
-set relativenumber
 set cursorline
+set relativenumber
 set colorcolumn=100
 set termguicolors
 let g:nord_comment_brightness = 12
+
+" Airline
+" ––––––––
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 " Usual editors behaviour
 " ———————————————————————
@@ -110,7 +114,6 @@ nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
-
 
 " Fuzzy find shortcuts
 nmap <leader>ff :Files<CR>
