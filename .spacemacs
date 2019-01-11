@@ -62,12 +62,13 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(ox-reveal)
-   ;; A list of packages and/or extensions that will not be install and loaded.
+
+   ;; A list of packages and/or extensions that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
-   ;;src/database/cb/Links/src/Links.cpp unused packages as well as their unused dependencies.
+   ;; unused packages as well as their unused dependencies.
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
@@ -313,20 +314,75 @@ you should place your code here."
   (global-company-mode)
 
   (custom-set-variables
-   '(org-agenda-files (quote ("~/org/work.org" "~/org/journal.org")))
+   '(org-agenda-files '("~/org/projets.org"
+                        "~/org/inbox.org"
+                        "~/org/tickler.org"))
+
    '(org-agenda-ndays 7)
-   '(org-deadline-warning-days 14))
+   '(org-deadline-warning-days 7))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "WAITING(w)"
                     "|" "DONE(d)" "CANCELLED(x)")))
 
-  (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks")
-           "* TODO %?\n  %\n  %a")
-          ("j" "Journal" entry (file+datetree+prompt "~/org/journal.org")
-           "* %?\nEntered on %U\n\n%i\nLink:%a\n")))
+  (setq org-capture-templates '(("t" "Todo [inbox]" entry
+                                 (file+headline "~/org/inbox.org" "Tasks")
+                                 "* TODO %i%?")
+                                ("T" "Tickler" entry
+                                 (file+headline "~/org/tickler.org" "Tickler")
+                                 "* %i%? \n %U")
+                                ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+                                 "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+                                ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+                                 "* %? [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]]\n")
+                                ))
+
+  (setq org-refile-targets '(("~/org/projets.org" :maxlevel . 3)
+                             ("~/org/someday.org" :level . 1)
+                             ("~/org/tickler.org" :maxlevel . 2)))
+
+  ; (require 'org-protocol)
+  ; (setq org-modules '(org-protocol))
+  ; (add-to-list 'org-protocol-protocol-alist
+  ;              '("Org capture"
+  ;                :protocol "capture"
+  ;                :function org-protocol-capture))
+
+  (setq org-agenda-custom-commands
+        ;; Next actions by context
+        '(("b" "Au bureau" tags-todo "@bureau"
+           ((org-agenda-overriding-header "Travail")
+            (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+          ("p" "PC perso" tags-todo "@pc"
+           ((org-agenda-overriding-header "PC perso")
+            (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
+          ("c" "Courses" tags-todo "@courses"
+           ((org-agenda-overriding-header "Courses")
+            (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first))))
+        )
+
 )
+
+(defun my-org-agenda-skip-all-siblings-but-first ()
+  "Skip all but the first non-done entry."
+  (let (should-skip-entry)
+    (unless (org-current-is-todo)
+      (setq should-skip-entry t))
+    (save-excursion
+      (while (and (not should-skip-entry) (org-goto-sibling t))
+        (when (org-current-is-todo)
+          (setq should-skip-entry t))))
+    (when should-skip-entry
+      (or (outline-next-heading)
+          (goto-char (point-max))))))
+
+(defun org-current-is-todo ()
+  (string= "TODO" (org-get-todo-state)))
+
+(defun transform-square-brackets-to-round-ones(string-to-transform)
+  "Transforms [ into ( and ] into ), other chars left unchanged."
+  (concat
+   (mapcar #'(lambda (c) (if (equal c ?[) ?\( (if (equal c ?]) ?\) c))) string-to-transform)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
