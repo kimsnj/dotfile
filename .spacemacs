@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     (rust :variables rust-backend 'lsp)
      helm
      auto-completion
      better-defaults
@@ -41,14 +42,14 @@ values."
 
      markdown
      git
-     org
+     (org :variables org-startup-indented t)
 
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      (keyboard-layout :variables kl-layout 'bepo)
-
+     themes-megapack
      ; sql
      ; javascript
      ; rust
@@ -132,15 +133,16 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(nord
+   dotspacemacs-themes '(sanityinc-tomorrow-day
+                         nord
                          solarized-dark
                          solarized-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Ubuntu Mono"
-                               :size 16
+   dotspacemacs-default-font '("FiraCode"
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1)
@@ -314,9 +316,7 @@ you should place your code here."
   (global-company-mode)
 
   (custom-set-variables
-   '(org-agenda-files '("~/org/projets.org"
-                        "~/org/inbox.org"
-                        "~/org/tickler.org"))
+   '(org-agenda-files '("~/org"))
 
    '(org-agenda-ndays 7)
    '(org-deadline-warning-days 7))
@@ -325,28 +325,13 @@ you should place your code here."
         '((sequence "TODO(t)" "WAITING(w)"
                     "|" "DONE(d)" "CANCELLED(x)")))
 
-  (setq org-capture-templates '(("t" "Todo [inbox]" entry
-                                 (file+headline "~/org/inbox.org" "Tasks")
-                                 "* TODO %i%?")
-                                ("T" "Tickler" entry
-                                 (file+headline "~/org/tickler.org" "Tickler")
-                                 "* %i%? \n %U")
-                                ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
-                                 "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
-                                ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
-                                 "* %? [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]]\n")
-                                ))
-
-  (setq org-refile-targets '(("~/org/projets.org" :maxlevel . 3)
-                             ("~/org/someday.org" :level . 1)
-                             ("~/org/tickler.org" :maxlevel . 2)))
-
-  ; (require 'org-protocol)
-  ; (setq org-modules '(org-protocol))
-  ; (add-to-list 'org-protocol-protocol-alist
-  ;              '("Org capture"
-  ;                :protocol "capture"
-  ;                :function org-protocol-capture))
+  (setq org-capture-templates
+        '(
+          ("t" "Task" entry (file+datetree "~/org/work/projects.org")
+           "* TODO %^{description}%?%^G")
+          ("n" "Note" entry (file+datetree "~/org/work/log.org")
+           "* %^{title}%?%^G")
+          ))
 
   (setq org-agenda-custom-commands
         ;; Next actions by context
@@ -395,7 +380,7 @@ you should place your code here."
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(package-selected-packages
    (quote
-    (yapfify unfill toml-mode smeargle racer pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim mmm-mode markdown-toc magit-gitflow live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-projectile helm-make projectile helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-rust flycheck-pos-tip pos-tip flycheck pkg-info epl evil-magit magit magit-popup git-commit with-editor diff-hl cython-mode company-statistics company-anaconda company cargo markdown-mode rust-mode auto-yasnippet yasnippet auto-compile packed anaconda-mode pythonic ac-ispell auto-complete nord-theme ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-mode-manager helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode bracketed-paste auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (transient yapfify unfill toml-mode smeargle racer pyvenv pytest pyenv-mode py-isort pip-requirements orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim mmm-mode markdown-toc magit-gitflow live-py-mode hy-mode dash-functional htmlize helm-pydoc helm-projectile helm-make projectile helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-rust flycheck-pos-tip pos-tip flycheck pkg-info epl evil-magit magit magit-popup git-commit with-editor diff-hl cython-mode company-statistics company-anaconda company cargo markdown-mode rust-mode auto-yasnippet yasnippet auto-compile packed anaconda-mode pythonic ac-ispell auto-complete nord-theme ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-mode-manager helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode bracketed-paste auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
